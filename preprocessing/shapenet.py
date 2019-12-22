@@ -163,7 +163,7 @@ class ShapeNet(data.Dataset):
             torch.save(self.data_points, points_fname)
 
     def __len__(self):
-        return len(self.datapath)
+        return len(self.data_metadata)
 
     def __getitem__(self, index):
         return_dict = copy.deepcopy(self.data_metadata[index])
@@ -208,4 +208,10 @@ class ShapeNet(data.Dataset):
 
 if __name__ == "__main__":
     s = ShapeNet(class_choice=["airplane"], train=True)
+    from visualizer import Visualizer
+
+    v = Visualizer(env="debug")
+    sample = s[0]
+    v.show_pointcloud(sample["points"], title=sample["pointcloud_path"])
+    v.show_image(sample["image"], title=sample["image_path"])
 
